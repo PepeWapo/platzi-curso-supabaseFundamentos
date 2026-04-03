@@ -101,7 +101,7 @@ function PostCard({
           <span className="font-semibold">
             {post.user?.username || "default_user"}
           </span>{" "}
-          <span className="text-foreground/80">{post.caption}</span>
+          <span className="text-foreground/85">{post.caption}</span>
         </p>
       </div>
     </article>
@@ -128,10 +128,10 @@ export default function Home() {
   useEffect(() => {
     const fetchPosts = async () => {
       const { data, error } = await supabase
-        .from("posts_new")
-        .select("*")
-        .order("created_at", { ascending: false });
-
+        .from("posts")
+        .select("*, user:users(username, avatar)")
+        .order("created_at", { ascending: false })
+        .limit(10);
       if (error) {
         console.error("Error al obtener los posts:", error);
       } else {
@@ -148,7 +148,7 @@ export default function Home() {
       <header className="sticky top-0 z-50 bg-card-bg border-b border-border">
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center justify-center">
           <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            Suplatzigram
+            Pepogram
           </h1>
         </div>
       </header>
